@@ -78,10 +78,10 @@
 
 | ID | Severity | Опис | Кроки | Очікувано | Фактично | Evidence |
 |---|---|---|---|---|---|---|
-| BUG-01 | Major | PING відповідає повільніше за timeout клієнта | `PING` | відповідь < 1.0 s, `{"status":"OK","command":"PING"}` | `TimeoutError` при 1.0 s; з timeout 3 s відповідь за 1.35 s | `report.xml`, `02_full_run.txt`; `BUG-01_ping.txt` |
-| BUG-02 | Major | Невалідний JSON у `GET TEMP` (REQ 3) | `GET TEMP` (DHT22 = 24.5 °C) | `{"status":"OK","temperature":24.5}` | `{"status":"OK","temperature":24.5` (без `}`) | `report.xml`, `01_baseline.txt`; `BUG-02_temp.txt` |
-| BUG-03 | Major | `SET PWM 100` відхиляється (REQ 5) | `SET PWM 100` | `{"status":"OK","pwm":100}` | `{"status":"ERROR","code":"INVALID_VALUE"}` | `report.xml`, `01_baseline.txt`; `BUG-03_pwm100.txt` |
-| BUG-04 | Critical | RESET не повертає безпечний стан (REQ 7) | `SET LED ON` → `RESET` → `STATUS` | `led:false, pwm:0` | `pwm:255` | `report.xml`, `01_baseline.txt`; `BUG-04_reset.txt` |
+| BUG-01 | Major | PING відповідає повільніше за timeout клієнта | `PING` | відповідь < 1.0 s, `{"status":"OK","command":"PING"}` | `TimeoutError` при 1.0 s; з timeout 3 s відповідь за 1.35 s | `report.xml`, `02_full_run.txt`; `BUG-01_ping.txt`; `manual_serial_log.txt`|
+| BUG-02 | Major | Невалідний JSON у `GET TEMP` (REQ 3) | `GET TEMP` (DHT22 = 24.5 °C) | `{"status":"OK","temperature":24.5}` | `{"status":"OK","temperature":24.5` (без `}`) | `report.xml`, `01_baseline.txt`; `BUG-02_temp.txt`; `manual_serial_log.txt` |
+| BUG-03 | Major | `SET PWM 100` відхиляється (REQ 5) | `SET PWM 100` | `{"status":"OK","pwm":100}` | `{"status":"ERROR","code":"INVALID_VALUE"}` | `report.xml`, `01_baseline.txt`; `BUG-03_pwm100.txt`; `manual_serial_log.txt` |
+| BUG-04 | Critical | RESET не повертає безпечний стан (REQ 7) | `SET LED ON` → `RESET` → `STATUS` | `led:false, pwm:0` | `pwm:255` | `report.xml`, `01_baseline.txt`; `BUG-04_reset.txt`; `manual_serial_log.txt` |
 
 Питання до вимог:
 - **REQ-Q1:** вимоги не задають максимального часу відповіді. Пропозиція: ≤ 500 ms (зараз PING — 1.35 s).
