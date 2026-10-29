@@ -23,10 +23,10 @@
 | 6 — власні тести | 1.0 s | 23 | 14 | 9 | 6 | 6 випадкових timeout (environment) + 3 REQ-Q2 | `03_my_negative.txt` |
 | 7 — повний | 1.0 s | 37 | 29 | 8 | 1 | 1 хибне падіння через запізнілу відповідь | `02_full_run.txt` |
 | 8 — повний, чистий | 1.0 s | 37 | 30 | 7 | 0 | до додавання timeout-тестів і `clean_device` | `report.xml` |
-| 9 — timeout-тести | 1.0 s | 2 | 2 | 0 | 0 | `test_my_timeout.py` з `clean_device` | `04_my_timeout.txt` |
+| 9 — timeout-тести | 1.0 s | 3 | 3 | 0 | 0 | `test_my_timeout.py` (з `clean_device`) + оригінальний `test_timeout.py` | `04_my_timeout.txt` |
 | **10 — фінальний** | 1.0 s | **39** | **32** | **7** | **0** | **основний результат**: усі тести, `clean_device` | `06_final_run.txt`, `report_final.xml` |
 
-Діагностичний вимір: `PING` з timeout 3 s → `{"status":"OK","command":"PING"}` за **1.35 s**.
+Діагностичний вимір: `PING` з timeout 3 s → `{"status":"OK","command":"PING"}` за **1.35–1.36 s** (два незалежні виміри, див. `manual_serial_log.txt`).
 
 ## 3. Аналіз FAIL / ERROR
 
@@ -62,10 +62,10 @@
   | `test_status_shows_pwm` | 2 | 0, 1, 50, 99 | STATUS `pwm` = встановленому | 1/4 PASS (REQ-Q2) |
 
 - Діагностика PING з timeout 3 s: відповідь коректна, час **1.35 s**.
-- Перевірка timeout `tests/test_my_timeout.py` — 2 тести, **2 PASS** (REQ 9), evidence `04_my_timeout.txt`:
+- Перевірка timeout `tests/test_my_timeout.py` — 2 тести, **2 PASS** (REQ 9), evidence `04_my_timeout.txt` (разом з оригінальним `test_timeout.py` — 3 PASS):
   - `test_timeout_is_finite`: `NO_RESPONSE` → `TimeoutError` за **1.06 s** (< 1.5 s) — клієнт не чекає вічно.
-  - `test_device_works_after_timeout`: після timeout `STATUS` → `OK` (тест 1.22 s) — пристрій і з'єднання працюють далі.
-  - Спостереження: teardown (`RESET`) після цього тесту тривав 5.50 s — ще один прояв підвисань Wokwi (environment).
+  - `test_device_works_after_timeout`: після timeout `STATUS` → `OK` (тест 1.24 s) — пристрій і з'єднання працюють далі.
+  - Спостереження: teardown (`RESET`) після `test_no_response_becomes_timeout` тривав 5.49 s — ще один прояв підвисань Wokwi (environment).
 - Precondition / cleanup — фікстура `clean_device` у `conftest.py` (використовують `test_my_negative.py`, `test_my_timeout.py`; 25 тестів):
   - **Precondition:** `RESET` → `STATUS` → якщо `pwm != 0` або `led != false` — fallback `SET LED OFF` → повторний `STATUS` → `assert pwm == 0 and led is False`. Тест стартує лише з перевіреного безпечного стану.
   - **Cleanup:** після тесту `SET LED OFF`.
