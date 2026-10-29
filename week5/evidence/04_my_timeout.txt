@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.8, pytest-9.2.0, pluggy-1.7.0
+rootdir: /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation
+configfile: pytest.ini
+collected 2 items
+
+tests/test_timeout.py ..
+
+=============================== warnings summary ===============================
+tests/test_timeout.py::test_timeout_is_finite
+tests/test_timeout.py::test_device_works_after_timeout
+  /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation/.venv/lib/python3.14/site-packages/serial/rfc2217.py:465: DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
+    self._thread.setDaemon(True)
+
+tests/test_timeout.py::test_timeout_is_finite
+tests/test_timeout.py::test_device_works_after_timeout
+  /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation/.venv/lib/python3.14/site-packages/serial/rfc2217.py:466: DeprecationWarning: setName() is deprecated, set the name attribute instead
+    self._thread.setName('pySerial RFC 2217 reader thread for {}'.format(self._port))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================== slowest durations ===============================
+5.69s teardown tests/test_timeout.py::test_timeout_is_finite
+1.25s call     tests/test_timeout.py::test_device_works_after_timeout
+1.06s call     tests/test_timeout.py::test_timeout_is_finite
+0.99s setup    tests/test_timeout.py::test_timeout_is_finite
+0.96s setup    tests/test_timeout.py::test_device_works_after_timeout
+0.69s teardown tests/test_timeout.py::test_device_works_after_timeout
+======================== 2 passed, 4 warnings in 10.66s ========================

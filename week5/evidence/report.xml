@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="37" time="105.276" timestamp="2026-10-29T16:14:14.491797+02:00" hostname="PC-2.local"><testcase classname="tests.test_boundaries" name="test_pwm_valid_boundaries[0]" time="1.323" /><testcase classname="tests.test_boundaries" name="test_pwm_valid_boundaries[1]" time="1.324" /><testcase classname="tests.test_boundaries" name="test_pwm_valid_boundaries[50]" time="1.345" /><testcase classname="tests.test_boundaries" name="test_pwm_valid_boundaries[99]" time="1.413" /><testcase classname="tests.test_boundaries" name="test_pwm_valid_boundaries[100]" time="1.393"><failure message="AssertionError: assert 'ERROR' == 'OK'&#10;  &#10;  #x1B[0m#x1B[91m- OK#x1B[39;49;00m#x1B[90m#x1B[39;49;00m&#10;  #x1B[92m+ ERROR#x1B[39;49;00m#x1B[90m#x1B[39;49;00m">device = &lt;device.Device object at 0x106e8df30&gt;, value = 100
+
+    @pytest.mark.parametrize("value", [0, 1, 50, 99, 100])
+    def test_pwm_valid_boundaries(device, value):
+        r = device.command(f"SET PWM {value}")
+&gt;       assert r["status"] == "OK"
+E       AssertionError: assert 'ERROR' == 'OK'
+E         
+E         #x1B[0m#x1B[91m- OK#x1B[39;49;00m#x1B[90m#x1B[39;49;00m
+E         #x1B[92m+ ERROR#x1B[39;49;00m#x1B[90m#x1B[39;49;00m
+
+tests/test_boundaries.py:6: AssertionError</failure></testcase><testcase classname="tests.test_boundaries" name="test_pwm_invalid_boundaries[-1]" time="6.345" /><testcase classname="tests.test_boundaries" name="test_pwm_invalid_boundaries[101]" time="1.355" /><testcase classname="tests.test_boundaries" name="test_pwm_invalid_boundaries[999]" time="1.349" /><testcase classname="tests.test_my_negative" name="test_pwm_out_of_range[-100]" time="6.358" /><testcase classname="tests.test_my_negative" name="test_pwm_out_of_range[-1]" time="1.356" /><testcase classname="tests.test_my_negative" name="test_pwm_out_of_range[101]" time="1.403" /><testcase classname="tests.test_my_negative" name="test_pwm_out_of_range[102]" time="6.340" /><testcase classname="tests.test_my_negative" name="test_pwm_out_of_range[255]" time="6.391" /><testcase classname="tests.test_my_negative" name="test_pwm_out_of_range[1000]" time="1.389" /><testcase classname="tests.test_my_negative" name="test_pwm_not_integer[abc]" time="6.342" /><testcase classname="tests.test_my_negative" name="test_pwm_not_integer[5.5]" time="1.368" /><testcase classname="tests.test_my_negative" name="test_pwm_not_integer[+5]" time="1.342" /><testcase classname="tests.test_my_negative" name="test_pwm_not_integer[50%]" time="1.399" /><testcase classname="tests.test_my_negative" name="test_pwm_not_integer[0x10]" time="6.408" /><testcase classname="tests.test_my_negative" name="test_invalid_pwm_keeps_state[-1]" time="1.960" /><testcase classname="tests.test_my_negative" name="test_invalid_pwm_keeps_state[101]" time="6.973" /><testcase classname="tests.test_my_negative" name="test_invalid_pwm_keeps_state[abc]" time="7.018" /><testcase classname="tests.test_my_negative" name="test_unknown_command[]" time="1.281" /><testcase classname="tests.test_my_negative" name="test_unknown_command[ping]" time="1.403" /><testcase classname="tests.test_my_negative" name="test_unknown_command[HELLO]" time="1.407" /><testcase classname="tests.test_my_negative" name="test_unknown_command[SET LED BLINK]" time="6.345" /><testcase classname="tests.test_my_negative" name="test_unknown_command[GET HUMIDITY]" time="1.391" /><testcase classname="tests.test_my_negative" name="test_status_shows_pwm[0]" time="1.517" /><testcase classname="tests.test_my_negative" name="test_status_shows_pwm[1]" time="1.531"><failure message="assert 2 == 1">device = &lt;device.Device object at 0x106f6c190&gt;, value = 1
+
+    @pytest.mark.parametrize("value", [0, 1, 50, 99])
+    def test_status_shows_pwm(device, value):
+        assert device.command(f"SET PWM {value}")["status"] == "OK"
+&gt;       assert device.command("STATUS")["pwm"] == value
+E       assert 2 == 1
+
+tests/test_my_negative.py:49: AssertionError</failure></testcase><testcase classname="tests.test_my_negative" name="test_status_shows_pwm[50]" time="6.553"><failure message="assert 127 == 50">device = &lt;device.Device object at 0x106f43f20&gt;, value = 50
+
+    @pytest.mark.parametrize("value", [0, 1, 50, 99])
+    def test_status_shows_pwm(device, value):
+        assert device.command(f"SET PWM {value}")["status"] == "OK"
+&gt;       assert device.command("STATUS")["pwm"] == value
+E       assert 127 == 50
+
+tests/test_my_negative.py:49: AssertionError</failure></testcase><testcase classname="tests.test_my_negative" name="test_status_shows_pwm[99]" time="1.591"><failure message="assert 252 == 99">device = &lt;device.Device object at 0x106f43840&gt;, value = 99
+
+    @pytest.mark.parametrize("value", [0, 1, 50, 99])
+    def test_status_shows_pwm(device, value):
+        assert device.command(f"SET PWM {value}")["status"] == "OK"
+&gt;       assert device.command("STATUS")["pwm"] == value
+E       assert 252 == 99
+
+tests/test_my_negative.py:49: AssertionError</failure></testcase><testcase classname="tests.test_relay" name="test_led_on_off" time="1.571" /><testcase classname="tests.test_relay" name="test_reset_restores_safe_state" time="1.662"><failure message="assert 255 == 0">device = &lt;device.Device object at 0x106f432a0&gt;
+
+    def test_reset_restores_safe_state(device):
+        device.command("SET LED ON")
+        device.command("RESET")
+        status = device.command("STATUS")
+&gt;       assert status["pwm"] == 0
+E       assert 255 == 0
+
+tests/test_relay.py:9: AssertionError</failure></testcase><testcase classname="tests.test_sensor" name="test_temperature_is_valid_json" time="1.311"><failure message="AssertionError: Invalid JSON from device: '{&quot;status&quot;:&quot;OK&quot;,&quot;temperature&quot;:24.5'">self = &lt;device.Device object at 0x106f42fd0&gt;, command = 'GET TEMP'
+
+    def command(self, command):
+        raw = self.command_raw(command)
+        try:
+&gt;           return json.loads(raw)
+                   ^^^^^^^^^^^^^^^
+
+device.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py:352: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:345: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;json.decoder.JSONDecoder object at 0x105ded010&gt;, s = '{"status":"OK","temperature":24.5', idx = 0
+
+    def raw_decode(self, s, idx=0):
+        """Decode a JSON document from ``s`` (a ``str`` beginning with
+        a JSON document) and return a 2-tuple of the Python
+        representation and the index in ``s`` where the document ended.
+    
+        This can be used to decode a JSON document from a string that may
+        have extraneous data at the end.
+    
+        """
+        try:
+&gt;           obj, end = self.scan_once(s, idx)
+                       ^^^^^^^^^^^^^^^^^^^^^^
+E           json.decoder.JSONDecodeError: Expecting ',' delimiter: line 1 column 34 (char 33)
+
+/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:361: JSONDecodeError
+
+The above exception was the direct cause of the following exception:
+
+device = &lt;device.Device object at 0x106f42fd0&gt;
+
+    def test_temperature_is_valid_json(device):
+&gt;       r = device.command("GET TEMP")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sensor.py:2: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;device.Device object at 0x106f42fd0&gt;, command = 'GET TEMP'
+
+    def command(self, command):
+        raw = self.command_raw(command)
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError as e:
+&gt;           raise AssertionError(f"Invalid JSON from device: {raw!r}") from e
+E           AssertionError: Invalid JSON from device: '{"status":"OK","temperature":24.5'
+
+device.py:31: AssertionError</failure></testcase><testcase classname="tests.test_status" name="test_ping" time="2.259"><failure message="TimeoutError: No response for command: PING">device = &lt;device.Device object at 0x106f6f6b0&gt;
+
+    def test_ping(device):
+&gt;       r = device.command("PING")
+            ^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_status.py:2: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+device.py:27: in command
+    raw = self.command_raw(command)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;device.Device object at 0x106f6f6b0&gt;, command = 'PING'
+
+    def command_raw(self, command):
+        self.ser.reset_input_buffer()
+        self.ser.write((command + "\n").encode())
+        self.ser.flush()
+        line = self.ser.readline().decode(errors="replace").strip()
+        if not line:
+&gt;           raise TimeoutError(f"No response for command: {command}")
+E           TimeoutError: No response for command: PING
+
+device.py:23: TimeoutError</failure></testcase><testcase classname="tests.test_status" name="test_status" time="1.295" /><testcase classname="tests.test_timeout" name="test_no_response_becomes_timeout" time="2.155" /></testsuite></testsuites>

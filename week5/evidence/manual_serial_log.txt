@@ -1,0 +1,6 @@
+>> PING         << {"status":"OK","command":"PING"}   (1.36s)
+>> GET TEMP     << {"status":"OK","temperature":24.5   (0.23s)
+>> SET PWM 100  << {"status":"ERROR","code":"INVALID_VALUE"}   (0.19s)
+>> SET LED ON   << {"status":"OK","led":true}   (0.20s)
+>> RESET        << {"status":"OK","reset":true}   (0.20s)
+>> STATUS       << {"status":"OK","led":true,"pwm":255,"heap":349852}   (0.19s)

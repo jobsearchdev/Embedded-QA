@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.8, pytest-9.2.0, pluggy-1.7.0
+rootdir: /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation
+configfile: pytest.ini
+collected 1 item
+
+tests/test_boundaries.py F
+
+=================================== FAILURES ===================================
+________________________ test_pwm_valid_boundaries[100] ________________________
+
+device = <device.Device object at 0x10992e120>, value = 100
+
+    @pytest.mark.parametrize("value", [0, 1, 50, 99, 100])
+    def test_pwm_valid_boundaries(device, value):
+        r = device.command(f"SET PWM {value}")
+>       assert r["status"] == "OK"
+E       AssertionError: assert 'ERROR' == 'OK'
+E         
+E         - OK
+E         + ERROR
+
+tests/test_boundaries.py:6: AssertionError
+=============================== warnings summary ===============================
+tests/test_boundaries.py::test_pwm_valid_boundaries[100]
+  /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation/.venv/lib/python3.14/site-packages/serial/rfc2217.py:465: DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
+    self._thread.setDaemon(True)
+
+tests/test_boundaries.py::test_pwm_valid_boundaries[100]
+  /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation/.venv/lib/python3.14/site-packages/serial/rfc2217.py:466: DeprecationWarning: setName() is deprecated, set the name attribute instead
+    self._thread.setName('pySerial RFC 2217 reader thread for {}'.format(self._port))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_boundaries.py::test_pwm_valid_boundaries[100] - AssertionEr...
+======================== 1 failed, 2 warnings in 1.33s =========================
