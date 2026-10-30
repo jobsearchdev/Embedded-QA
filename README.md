@@ -86,11 +86,11 @@ homework/          HOMEWORK.md — статус виконання вимог
 instructor/        DEFENSE_RUBRIC.md (самооцінка), INSTRUCTOR_GUIDE.md (як перевірити)
 master_test_plan/  MASTER_TEST_PLAN.md
 portfolio/         CASE_STUDY.md, BUG_REPORTS.md
-templates/         INTERVIEW_BRIEF.md, RELEASE_DECISION.md
+templates/         RELEASE_DECISION.md
 test_matrix/       FINAL_TEST_MATRIX.md
 automation/        pytest_device/ (39 тестів CLI), log_checks/ (перевірка Serial-логів)
 ```
 
 ---
 
-Захист: [Interview Brief](templates/INTERVIEW_BRIEF.md) · Автор: Evhenii Kofan · Курс Embedded QA (IoT / DefTech), 2026
+ Автор: Evhenii Kofan · Курс Embedded QA (IoT / DefTech), 2026
