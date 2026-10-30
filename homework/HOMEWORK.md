@@ -12,7 +12,6 @@
 | 4 | Portfolio README | [README.md](../README.md) | ✅ |
 | 5 | Case Study | [portfolio/CASE_STUDY.md](../portfolio/CASE_STUDY.md) | ✅ |
 | 6 | Release Decision | [templates/RELEASE_DECISION.md](../templates/RELEASE_DECISION.md) | ✅ NO-GO |
-| 7 | Усний захист 5–7 хв | [templates/INTERVIEW_BRIEF.md](../templates/INTERVIEW_BRIEF.md) | ✅ сценарій і відповіді |
 | — | 3+ Bug Reports | [portfolio/BUG_REPORTS.md](../portfolio/BUG_REPORTS.md) | ✅ реєстр 30 + 4 детальні |
 | — | Pytest automation | [`automation/pytest_device/`](../automation/pytest_device/), [`automation/log_checks/`](../automation/log_checks/) | ✅ 39 + 6 тестів |
 | — | QA Conclusion | README → Conclusion; RELEASE_DECISION → Rationale | ✅ |
@@ -52,4 +51,4 @@
 - [x] Описати test environment і межі simulation vs real hardware
 - [x] Визначити Entry / Exit Criteria
 - [x] Зібрати evidence package та README Case Study
-- [x] Підготувати 2–3 технічні рішення для співбесіди (INTERVIEW_BRIEF, розділ «3 технічні рішення»)
+- [x] Підготувати 2–3 технічні рішення для співбесіди (Case Study §6–8: тренд heap, автоматична перевірка логів, класифікація падінь)

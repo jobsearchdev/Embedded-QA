@@ -83,7 +83,7 @@ python automation/log_checks/network_log.py evidence/w06_network/full-261030-143
 case_study/        SYSTEM_OVERVIEW.md
 evidence/          EVIDENCE_INDEX.md + артефакти w01…w06
 homework/          HOMEWORK.md — статус виконання вимог
-instructor/        DEFENSE_RUBRIC.md (самооцінка), INSTRUCTOR_GUIDE.md (як перевірити)
+instructor/        PORTFOLIO_RUBRIC.md (самооцінка), INSTRUCTOR_GUIDE.md (як перевірити)
 master_test_plan/  MASTER_TEST_PLAN.md
 portfolio/         CASE_STUDY.md, BUG_REPORTS.md
 templates/         RELEASE_DECISION.md

@@ -38,14 +38,7 @@ pytest -v automation/log_checks/        # очікувано: 1 passed, 5 failed
 | `test_matrix/` | Final Test Matrix |
 | `evidence/` | Evidence Index + артефакти за тижнями (`w01`…`w06`) |
 | `portfolio/` | Case Study, Bug Reports |
-| `templates/` | Release Decision, Interview Brief |
+| `templates/` | Release Decision |
 | `homework/` | статус виконання вимог |
 | `instructor/` | самооцінка за рубрикою, цей гайд |
 | `automation/` | `pytest_device/` — Pytest suite CLI (тиж. 5); `log_checks/` — перевірка вимог по Serial-логу |
-
-## Питання, які варто поставити на захисті
-
-- Чому D-04 (витік heap) — Critical, а D-12 (reconnect storm) — Major?
-- Що доводить і чого не доводить `powerloss` у Wokwi?
-- Чому debounce у тиж. 4 — Observation, а не PASS?
-- Як ви відрізнили environment failure від дефекту прошивки в тиж. 5?
