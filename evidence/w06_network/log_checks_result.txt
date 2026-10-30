@@ -1,0 +1,89 @@
+States seen: ['BACKOFF', 'CONNECTED', 'CONNECTING', 'DISCONNECTED']
+Retry intervals: n=2684, median=50.0 ms
+Publish IDs: 1037 unique, 37 duplicated, max x6
+Buffer over capacity: 20 records, max (20, 8)
+STRESS heap delta per run: [8000, 8000, 7992, 8012, 8000, 8000, 8000, 8000, 8000, 8000, 1600]
+Max 'dropped' in STATUS: 0
+
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3
+rootdir: /tmp/claude-0/-home-claude/a4361752-8271-5bf2-9776-6d97f1ffb6fc/scratchpad/out/Portfolio
+plugins: platformdirs-4.13.0, anyio-4.15.1
+collecting ... collected 6 items
+
+automation/log_checks/test_network_log.py::test_r1_all_network_states_observable PASSED [ 16%]
+automation/log_checks/test_network_log.py::test_r2_reconnect_uses_backoff_not_storm FAILED [ 33%]
+automation/log_checks/test_network_log.py::test_r4_buffer_never_exceeds_capacity FAILED [ 50%]
+automation/log_checks/test_network_log.py::test_r4_overflow_is_accounted FAILED [ 66%]
+automation/log_checks/test_network_log.py::test_r6_each_message_published_once FAILED [ 83%]
+automation/log_checks/test_network_log.py::test_r7_heap_stable_under_stress FAILED [100%]
+
+=================================== FAILURES ===================================
+___________________ test_r2_reconnect_uses_backoff_not_storm ___________________
+
+log = NetworkLog(states=['DISCONNECTED', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF...7880, 266280)], dropped_values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+    def test_r2_reconnect_uses_backoff_not_storm(log):
+        iv = retry_intervals_ms(log)
+        assert iv, "у лозі немає спроб reconnect"
+        median = statistics.median(iv)
+>       assert median >= MIN_BACKOFF_MEDIAN_MS, f"reconnect storm: median retry interval {median:.0f} ms"
+E       AssertionError: reconnect storm: median retry interval 50 ms
+E       assert 50.0 >= 500
+
+automation/log_checks/test_network_log.py:41: AssertionError
+____________________ test_r4_buffer_never_exceeds_capacity _____________________
+
+log = NetworkLog(states=['DISCONNECTED', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF...7880, 266280)], dropped_values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+    def test_r4_buffer_never_exceeds_capacity(log):
+        over = [c for c in log.buffer_counts if c[0] > c[1]]
+>       assert not over, f"buffer count > capacity: {sorted(set(over))[:5]}"
+E       AssertionError: buffer count > capacity: [(9, 8), (10, 8), (11, 8), (12, 8), (13, 8)]
+E       assert not [(9, 8), (10, 8), (11, 8), (12, 8), (12, 8), (9, 8), ...]
+
+automation/log_checks/test_network_log.py:46: AssertionError
+________________________ test_r4_overflow_is_accounted _________________________
+
+log = NetworkLog(states=['DISCONNECTED', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF...7880, 266280)], dropped_values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+    def test_r4_overflow_is_accounted(log):
+        overflowed = any(c > cap for c, cap in log.buffer_counts)
+        if overflowed:
+>           assert max(log.dropped_values, default=0) > 0, "overflow був, але dropped у STATUS завжди 0"
+E           AssertionError: overflow був, але dropped у STATUS завжди 0
+E           assert 0 > 0
+E            +  where 0 = max([0, 0, 0, 0, 0, 0, ...], default=0)
+E            +    where [0, 0, 0, 0, 0, 0, ...] = NetworkLog(states=['DISCONNECTED', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'C...92: 1, 993: 1, 994: 1, 995: 1, 996: 1, 997: 1, 998: 1, 999: 1, 1000: 1, 1001: 1, 1002: 1, 1003: 1, 1004: 1, 1005: 1, 1006: 1, 1007: 1, 1008: 1, 1009: 1, 1010: 1, 1011: 1, 1012: 1, 1013: 1, 1014: 1, 1015: 1, 1016: 1, 1017: 1, 1018: 1, 1019: 1, 1020: 1, 1021: 1, 1022: 1, 1023: 1, 1024: 1, 1025: 1, 1026: 1, 1027: 1, 1028: 1, 1029: 1, 1030: 1, 1031: 1, 1032: 1, 1033: 1, 1034: 1}), buffer_counts=[(1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (5, 8), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), (8, 8), (9, 8), (10, 8), (11, 8), (12, 8), (12, 8), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), (8, 8), (8, 8), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), (8, 8), (9, 8), (9, 8), (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), (8, 8), (9, 8), (10, 8), (11, 8), (12, 8), (13, 8), (14, 8), (15, 8), (16, 8), (17, 8), (18, 8), (19, 8), (20, 8), (20, 8)], stress_heap=[(347884, 339884), (339884, 331884), (331884, 323892), (323892, 315880), (315880, 307880), (307880, 299880), (299880, 291880), (291880, 283880), (283880, 275880), (275880, 267880), (267880, 266280)], dropped_values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).dropped_values
+
+automation/log_checks/test_network_log.py:52: AssertionError
+_____________________ test_r6_each_message_published_once ______________________
+
+log = NetworkLog(states=['DISCONNECTED', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF...7880, 266280)], dropped_values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+    def test_r6_each_message_published_once(log):
+        dups = {i: n for i, n in log.publish_ids.items() if n > 1}
+>       assert not dups, f"{len(dups)} ID опубліковано більше 1 разу, напр. {list(dups.items())[:5]}"
+E       AssertionError: 37 ID опубліковано більше 1 разу, напр. [(1, 2), (2, 2), (3, 2), (4, 2), (5, 2)]
+E       assert not {1: 2, 2: 2, 3: 2, 4: 2, ...}
+
+automation/log_checks/test_network_log.py:57: AssertionError
+_______________________ test_r7_heap_stable_under_stress _______________________
+
+log = NetworkLog(states=['DISCONNECTED', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF', 'CONNECTING', 'BACKOFF...7880, 266280)], dropped_values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+    def test_r7_heap_stable_under_stress(log):
+        assert log.stress_heap, "у лозі немає STRESS-прогонів"
+        worst = max(start - end for start, end in log.stress_heap)
+>       assert worst <= MAX_HEAP_LOSS_PER_100_MSG, f"heap втрачає {worst} B за STRESS 100"
+E       AssertionError: heap втрачає 8012 B за STRESS 100
+E       assert 8012 <= 512
+
+automation/log_checks/test_network_log.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED automation/log_checks/test_network_log.py::test_r2_reconnect_uses_backoff_not_storm
+FAILED automation/log_checks/test_network_log.py::test_r4_buffer_never_exceeds_capacity
+FAILED automation/log_checks/test_network_log.py::test_r4_overflow_is_accounted
+FAILED automation/log_checks/test_network_log.py::test_r6_each_message_published_once
+FAILED automation/log_checks/test_network_log.py::test_r7_heap_stable_under_stress
+========================= 5 failed, 1 passed in 0.15s ==========================

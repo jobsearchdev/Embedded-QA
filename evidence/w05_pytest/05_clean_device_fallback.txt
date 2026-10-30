@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.8, pytest-9.2.0, pluggy-1.7.0
+rootdir: /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation
+configfile: pytest.ini
+collected 1 item
+
+tests/test_my_negative.py 
+WARNING: RESET не спрацював: {'status': 'OK', 'led': True, 'pwm': 127, 'heap': 349852} -> fallback SET LED OFF
+.
+
+=============================== warnings summary ===============================
+tests/test_my_negative.py::test_pwm_out_of_range[101]
+  /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation/.venv/lib/python3.14/site-packages/serial/rfc2217.py:465: DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
+    self._thread.setDaemon(True)
+
+tests/test_my_negative.py::test_pwm_out_of_range[101]
+  /Users/evgenijkofan/Downloads/week6_1/HW/Slack/webinar_6_python_automation/automation/.venv/lib/python3.14/site-packages/serial/rfc2217.py:466: DeprecationWarning: setName() is deprecated, set the name attribute instead
+    self._thread.setName('pySerial RFC 2217 reader thread for {}'.format(self._port))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 1 passed, 2 warnings in 2.35s =========================

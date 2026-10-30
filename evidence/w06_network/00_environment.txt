@@ -1,0 +1,8 @@
+macOS: 26.6.2 (25G83)
+Chip: Apple M3
+VS Code: 1.142.0
+PlatformIO: PlatformIO Core, version 6.2.0
+Wokwi ext: wokwi.wokwi-vscode@4.1.0
+monitor_speed = 115200
+monitor_port = rfc2217://localhost:4000
+monitor_filters = time, log2file
